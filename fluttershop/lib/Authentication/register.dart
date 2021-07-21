@@ -106,8 +106,9 @@ class _RegisterState extends State<Register> {
               email: _EmailtextEditingController.text.trim(),
               password: _passwordtextEditingController.text.trim()
               );
-          EcommerceApp.sharedPreferences!.setString('name', _nametextEditingController.text.trim());
-          EcommerceApp.sharedPreferences!.setString('email', _EmailtextEditingController.text.trim());
+          EcommerceApp.sharedPreferences!.setString(EcommerceApp.userName, _nametextEditingController.text.trim());
+          EcommerceApp.sharedPreferences!.setString(EcommerceApp.userEmail, _EmailtextEditingController.text.trim());
+           EcommerceApp.sharedPreferences!.setString(EcommerceApp.userAvatarUrl, userImgUrl);
        Fluttertoast.showToast(
         msg: "User is create and store in shareprefernce also",
         toastLength: Toast.LENGTH_SHORT,

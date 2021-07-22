@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttershop/Admin/adminLogin.dart';
 import 'package:fluttershop/Store/storehome.dart';
 import 'package:fluttershop/Widgets/customTextField.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -89,6 +90,29 @@ class _LoginState extends State<Login> {
                   'Login',
                   style: TextStyle(fontSize: 20),
                 )),
+          ),
+          SizedBox(height: 20,),
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>  AdminLogin()));
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                //color: Colors.blue[50]
+                border: Border(bottom: BorderSide(
+                  width: 4,
+                  color: Colors.blue,
+                ))
+              ),
+              width: 180,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Icon(Icons.location_history, size: 20,),
+                  Text(" Login As Admin", style: TextStyle(fontSize: 20),)
+                ],
+              ),
+            ),
           )
         ],
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttershop/Authentication/login.dart';
+//import 'package:fluttershop/Authentication/login.dart';
 import 'package:fluttershop/Authentication/register.dart';
 
 
@@ -53,6 +54,7 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
      child: TabBarView(children: 
      [
        Login(),
+       //AdminSignInPage(),
        Register(),
      ]
      ),

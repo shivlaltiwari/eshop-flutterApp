@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
                   controller: _passwordtextEditingController,
                   data: Icons.lock,
                   hintText: "Enter password",
-                  isObsecure: false),
+                  isObsecure: true),
             ]),
           ),
           SizedBox(

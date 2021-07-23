@@ -32,7 +32,7 @@ class _AdminLoginState extends State<AdminLogin> {
               textColor: Colors.white,
               fontSize: 16.0);
         }
-        else if (result.data()['password'] !=
+        else if (result.data()['password'] ==
             _passwordtextEditingController.text.trim()) {
           Fluttertoast.showToast(
               msg: "Password donot match",

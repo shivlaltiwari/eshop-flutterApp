@@ -54,21 +54,8 @@ class _RegisterState extends State<Register> {
       _passwordtextEditingController.text ==
               _cpasswordtextEditingController.text
           ?
-          // _EmailtextEditingController.text.isEmpty &&
-          // _passwordtextEditingController.text.isNotEmpty &&
-          // _cpasswordtextEditingController.text.isNotEmpty &&
-          // _nametextEditingController.text.isNotEmpty
           uploadToStorage()
           :
-          //   Fluttertoast.showToast(
-          //     msg: "Fill all the given Filed",
-          //     toastLength: Toast.LENGTH_SHORT,
-          //     gravity: ToastGravity.CENTER,
-          //     timeInSecForIosWeb: 1,
-          //     backgroundColor: Colors.red,
-          //     textColor: Colors.white,
-          //     fontSize: 16.0,
-          //  ):
           Fluttertoast.showToast(
               msg: "Password doesnot match",
               toastLength: Toast.LENGTH_SHORT,

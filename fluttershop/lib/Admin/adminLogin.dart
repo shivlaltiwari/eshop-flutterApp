@@ -22,7 +22,8 @@ class _AdminLoginState extends State<AdminLogin> {
   loginAdmin() {
     FirebaseFirestore.instance.collection('admins').get().then((snapshot) {
       snapshot.docs.forEach((result) {
-        if (result.data()['id'] == _EmailtextEditingController.text.trim()) {
+        
+        if (result.data()['id'] != _EmailtextEditingController.text.trim()) {
           Fluttertoast.showToast(
               msg: "Admin id not match",
               toastLength: Toast.LENGTH_SHORT,
@@ -32,7 +33,7 @@ class _AdminLoginState extends State<AdminLogin> {
               textColor: Colors.white,
               fontSize: 16.0);
         }
-        else if (result.data()['password'] ==
+        else if (result.data()['password'] !=
             _passwordtextEditingController.text.trim()) {
           Fluttertoast.showToast(
               msg: "Password donot match",

@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttershop/Widgets/loadingWidget.dart';
 import 'package:fluttershop/main.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UploadPage extends StatefulWidget {
@@ -22,6 +25,7 @@ class _UploadPageState extends State<UploadPage>
   String productID =DateTime.now().millisecondsSinceEpoch.toString();
   bool uploading = false;
    File? imagefle;
+  String imageUrl = "";
 
   @override
   // ignore: must_call_super
@@ -206,14 +210,21 @@ class _UploadPageState extends State<UploadPage>
             color: Colors.white, fontSize:20, fontWeight: FontWeight.bold),
       ),
       actions: [
-        FlatButton(onPressed: (){},
+        FlatButton(onPressed:
+        () async{
+          if(uploading){
+            null;
+          } else{
+            await uploadandSaveInfoProduct();
+          }
+        },
          child: Text("Add", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0,color: Colors.pink),)
          )
       ],
     ),
     body: ListView(
       children: [
-        uploading ? linearProgress():Text(""),
+        uploading ? circularProgress():Text(""),
         Container(
           height: 230,
           width: MediaQuery.of(context).size.width* 0.8,
@@ -310,4 +321,56 @@ class _UploadPageState extends State<UploadPage>
       descTexteditingController.clear();
     });
   }
+  uploadandSaveInfoProduct() async{
+    setState(() {
+      uploading = true;
+    });
+    imageUrl=  await uploadProductImage(imagefle!);
+    saveItemInfo(imageUrl);
+
+  }
+  Future<String> uploadProductImage(File imagefle) async{
+    final Reference ref = FirebaseStorage.instance.ref().child("Items");
+     await ref.child("product_$productID.jpg").putFile(File(imagefle.path)).whenComplete(()async{
+        imageUrl = (await ref.child("product_$productID.jpg").getDownloadURL()).toString();
+      //  await ref.child("Items").getDownloadURL().then((url){
+      //    imageUrl = url;
+      //  });
+     });
+      return imageUrl;
+    }
+    saveItemInfo(String mimageUrl) async{
+      final itemRef = FirebaseFirestore.instance.collection("items");
+      itemRef.doc(productID).set({
+        "shortInfo": shotTexteditingController.text.trim(),
+        "longDescription": descTexteditingController.text.trim(),
+        "title": titleTexteditingController.text.trim(),
+        "price": PriceTexteditingController.text.trim(),
+        "publishedDate": DateTime.now(),
+        "status": "available",
+        "thumbnailUrl": mimageUrl
+      });
+      Fluttertoast.showToast(
+        msg: "Items were Added ",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+      setState(() {
+        imagefle = null;
+        uploading = false;
+        productID = DateTime.now().millisecondsSinceEpoch.toString();
+        descTexteditingController.clear();
+        titleTexteditingController.clear();
+        PriceTexteditingController.clear();
+        shotTexteditingController.clear();
+
+      });
+
+
+
+    }
 }

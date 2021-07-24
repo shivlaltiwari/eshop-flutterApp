@@ -7,7 +7,7 @@ class ItemModel {
   late String thumbnailUrl;
   late String longDescription;
   late String status;
-   late int price;
+  late int price;
 
   ItemModel(
       {required this.title,
